@@ -3,17 +3,17 @@ const { Item } =require('../models/models')
 
 class  ItemController {
     async create (req, res) {
-        const {name, listId} = req.body
-        const types = await Item.create({itemName: name, listId})
-        return res.json(types)
+        const {name, listId, sortOrder} = req.body
+        const item = await Item.create({itemName: name, sortOrder, listId})
+        return res.json(item)
     }
 
     async update (req, res) {
-        // const {id} = req.params
+
         try{
-            const {id, name, listId} = req.body
+            const {id, name, sortOrder, listId} = req.body
             await Item.update(
-                {id, itemName: name, listId},
+                {id, itemName: name, sortOrder, listId},
                 {where:{id: id}})
             res.status(200).json({message:"Updated successfully"});
            }
@@ -32,7 +32,6 @@ class  ItemController {
         }
         return res.json(items)
     }
-
     async delete (req, res) {
         const {id} = req.params
         try{
@@ -40,7 +39,7 @@ class  ItemController {
             res.status(200).json({message:"Deleted successfully"});
            }
            catch(e){
-            res.status(404).json({message:"Item not found"})
+            res.status(404).json({message:"list not found"})
            }
     }
 }

@@ -1,5 +1,5 @@
 const Router = require('express')
-const listController = require('../controlers/listControler')
+const listController = require('../controllers/listController')
 
 const router =new Router()
 

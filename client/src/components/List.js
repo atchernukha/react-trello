@@ -1,38 +1,87 @@
-import React, { useEffect } from 'react';
-import { Button, Card, CardActions, Typography, CardContent, Grid } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { FormControl, Input, InputLabel, Card, Typography, CardContent, Grid, IconButton, InputAdornment } from '@mui/material';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { useDispatch } from 'react-redux';
 import { ListActionCreators } from '../store/redusers/List/actionCreators';
 import Item from './Item';
+import { green, lightBlue } from '@mui/material/colors';
 
-export default function List({ listName, id, items }) {
-    console.log(listName)
-    // const {items} = useSelector(state => state.items)
+export default function List({ list }) {
+    const [itemName, setItemName] = useState("")
+    const { listName, id, items } = list
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(ListActionCreators.fetchItems(id))
     }, []);
-
+    const dragOverHandler = e => {
+        e.preventDefault()
+        e.target.style.boxShadow = '0 4px 3px gray'
+    }
+    function dragLeaveHandler(e) {
+        e.target.style.boxShadow = 'none'
+    }
+    const dropHandler = (e, list) => {
+        e.preventDefault()
+        e.stopPropagation()
+        dispatch(ListActionCreators.moveItem(list))
+    }
+    const deleteHandler = () => {
+        dispatch(ListActionCreators.deleteList(list))
+    }
+    const addItem = e => {
+        console.log("add Item:", itemName)
+        dispatch(ListActionCreators.createItem(itemName, list))
+        setItemName("")
+    }
     return (
-        <Card sx={{ maxWidth: 345 }}>
-            <CardContent container spacing={2}>
+        <Card sx={{ maxWidth: 275, bgcolor: lightBlue[100], mx: "20px", borderRadius: 2 }}
+            onDragOver={e => dragOverHandler(e)}
+            onDragLeave={e => dragLeaveHandler(e)}
+            onDrop={e => dropHandler(e, list)}
+        >
+            <CardContent spacing={3}>
                 <Typography gutterBottom variant="h5" component="div">
-                    {listName}
+                    <Grid
+                        container
+                        direction="row"
+                        justifyContent="space-between"
+                        alignItems="center"
+                    >
+                        {listName}
+                        <IconButton color="secondary"
+                            disabled={!!items?.length}
+                            onClick={deleteHandler}
+                            size="small"
+                            sx={{ position: "relative", top: 0, right: 0 }}>
+                            <HighlightOffIcon />
+                        </IconButton>
+                    </Grid>
                 </Typography>
-                <Grid container justifyContent="center" spacing={2}>
-                {items ? items.map(item => 
-                <Grid key={item.id} item>
-                <Item item={item} />
-                </Grid>
-                ) : null}
+                <Grid container justifyContent="center" spacing={1}>
+                    {items ? items.map(x =>
+                        <Grid key={x.id} item>
+                            <Item item={x} list={list} />
+                        </Grid>
+                    ) : null}
+                    <FormControl fullWidth sx={{ mx: "20px", }} variant="standard" >
+                        <InputLabel htmlFor="new-item">Type new item...</InputLabel>
+                        <Input
+                            id="new-item"
+                            variant="standard"
+                            value={itemName}
+                            onChange={e => { setItemName(e.target.value) }}
+                            endAdornment={
+                                <InputAdornment position="end">
+                                    <IconButton disabled={!itemName} onClick={addItem} size="small" sx={{ color: green[400] }}>
+                                        <AddCircleOutlineIcon />
+                                    </IconButton>
+                                </InputAdornment>
+                            }
+                        />
+                    </FormControl>
                 </Grid>
             </CardContent>
-            <CardActions>
-                <Button size="small">Add Card</Button>
-                <Button size="small">Remove List</Button>
-            </CardActions>
         </Card>
     )
 }
-                // <Typography variant="body2" color="text.secondary">
-                //     {items ? items.map(item => <Item key={item.id} {...item} />) : null}
-                // </Typography>

@@ -1,26 +1,19 @@
-import React,{useEffect} from 'react';
-import { Button, Grid} from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
-import { ListActionCreators } from './store/redusers/List/actionCreators';
+import React  from 'react';
+import { Grid, Paper } from '@mui/material';
 import Header from './components/Header';
 import Lists from './components/Lists';
-
-import './App.css';
+import { brown } from '@mui/material/colors';
 
 function App() {
-  const { lists } = useSelector(state => state.lists);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(ListActionCreators.fetchList())
-  }, []);
   return (
-    <Grid sx={{ flexGrow: 1 }} container spacing={2}>
-      <Grid item xs={12}>
-        <Header/>
-        <Lists lists={lists}/>
-        <Button variant="contained" onClick={() => { }}>Hello Trello!!!</Button>
+    <Paper sx={{ bgcolor: brown[50], height: '100vh'  }} >
+      <Header/>
+      <Grid sx={{ flexGrow: 1, mt: "4px",  bgcolor: brown[50] }} container spacing={2}>
+        <Grid item xs={12}>
+          <Lists />
+        </Grid>
       </Grid>
-      </Grid>
+    </Paper>
   );
 }
 

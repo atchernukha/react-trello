@@ -1,38 +1,69 @@
 import React from 'react';
-import { Button, Card, CardActions, Typography, CardContent} from '@mui/material';
+import { Grid, IconButton, Card, Typography, CardContent } from '@mui/material';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import { indigo } from '@mui/material/colors';
+import { useDispatch } from 'react-redux';
+import { ListActionCreators } from '../store/redusers/List/actionCreators';
 
-export default function Item({item}) {
-    const {itemName, updatedAt} = item;
-    const updateTime = ' ' + updatedAt;
-    function dragStartHandler(e,list,item) {
-        // e.preventDefault()
-        console.log("------------")
-    }
-    function dragEndHandler(e) {}
-    function dragLeaveHandler(e) {}
-    function dragOverHandler(e) {}
-    function dropHandler(e,list,item) {
-        e.preventDefault()
-    }
-    return (
-        <Card sx={{ maxWidth: 340 }}
-            onDragStart={e => dragStartHandler(e,item)}
-            onDragLeave={e => dragLeaveHandler(e)}
-            onDragEnd={e => dragEndHandler(e)}
-            onDragOver={e => dragOverHandler(e)}
-            onDrop={e => dropHandler(e,item)}
-            draggable={true}>
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-          {itemName}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
+export default function Item({ item, list }) {
+  const { itemName, updatedAt } = item;
+  const updateTime = ' ' + updatedAt;
+  const dispatch = useDispatch()
+  function dragStartHandler(e, list, item) {
+    dispatch(ListActionCreators.dragStartItem(item, list))
+  }
+  function dragEndHandler(e) {
+    e.target.style.boxShadow = 'none'
+  }
+  function dragLeaveHandler(e) {
+    e.target.style.boxShadow = 'none'
+  }
+  function dragOverHandler(e) {
+    e.preventDefault()
+    // if(e.target.className == 'item') {
+    e.target.style.boxShadow = '0 4px 3px gray'
+    // e.target.style.background = 'lightgray'
+    // }
+  }
+  function dropHandler(e, list, item) {
+    e.preventDefault()
+    e.stopPropagation()
+    dispatch(ListActionCreators.moveItem(list,item))
+  }
+  const removeItem = () => {
+    const id = item.id
+    dispatch(ListActionCreators.deleteItem(id, list))
+  }
+  return (
+    <Card sx={{ minWidth: 230, bgcolor: indigo[100], borderRadius: 2 }}
+      classes={{
+        root: "item", // class name, e.g. classes-nesting-root-x
+        // label: classes.label, // class name, e.g. classes-nesting-label-x
+      }}
+      onDragStart={e => dragStartHandler(e, list, item)}
+      onDragLeave={e => dragLeaveHandler(e)}
+      onDragEnd={e => dragEndHandler(e)}
+      onDragOver={e => dragOverHandler(e)}
+      onDrop={e => dropHandler(e, list, item)}
+      draggable={true}>
+      <CardContent>
+        <Typography gutterBottom variant="h6" component="div">
+          <Grid
+            container
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+        {itemName}
+          <IconButton color="secondary" onClick={ removeItem }>
+          <HighlightOffIcon />
+          </IconButton>
+          </Grid>
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
           {updateTime}
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button size="small">Remove Card</Button>
-        </CardActions>
-      </Card>
-    )
+        </Typography>
+      </CardContent>
+    </Card>
+  )
 }

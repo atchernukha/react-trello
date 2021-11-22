@@ -8,7 +8,8 @@ const List = sequelize.define('list',{
 
 const Item = sequelize.define('item',{
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    itemName: {type: DataTypes.STRING, unique: true}
+    itemName: {type: DataTypes.STRING, unique: true},
+    sortOrder: {type: DataTypes.INTEGER}
 })
 
 List.hasMany(Item)

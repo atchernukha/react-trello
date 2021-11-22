@@ -5,7 +5,7 @@ class  ListController {
     async create (req, res) {
         const {name} = req.body
         const list = await List.create({listName: name})
-        return res.status(200).json({message:"Created successfully"});
+        return res.status(200).json(list);
     }
 
     async getAll (req, res) {
