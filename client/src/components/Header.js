@@ -9,7 +9,6 @@ export default function Header() {
     const [listName, setlistName] = useState("");
     const dispatch = useDispatch();
     const addList = e => {
-        // console.log(listName)
         dispatch(ListActionCreators.createList(listName))
         setlistName("")
     }
