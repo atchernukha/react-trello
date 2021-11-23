@@ -1,4 +1,4 @@
-const {Sequelize} = require('sequelize')
+const { Sequelize } = require('sequelize')
 
 module.exports = new Sequelize(
     process.env.PG_DATABASE,
@@ -6,7 +6,12 @@ module.exports = new Sequelize(
     process.env.PG_PASSWORD,
     {
         dialect: 'postgres',
-        host:   process.env.PG_HOST,
-        port:   process.env.PG_PORT
+        "dialectOptions": {
+            "ssl": {
+                "rejectUnauthorized": false
+            }
+        },
+        host: process.env.PG_HOST,
+        port: process.env.PG_PORT
     }
 )
