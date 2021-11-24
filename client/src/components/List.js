@@ -58,7 +58,7 @@ export default function List({ list }) {
                         </IconButton>
                     </Grid>
                 </Typography>
-                <Grid container justifyContent="center" spacing={1}>
+                <Grid container component="form" justifyContent="center" spacing={1}>
                     {items ? items.map(x =>
                         <Grid key={x.id} item>
                             <Item item={x} list={list} />
@@ -73,7 +73,7 @@ export default function List({ list }) {
                             onChange={e => { setItemName(e.target.value) }}
                             endAdornment={
                                 <InputAdornment position="end">
-                                    <IconButton disabled={!itemName} onClick={addItem} size="small" sx={{ color: green[400] }}>
+                                    <IconButton type="submit" disabled={!itemName} onClick={addItem} size="small" sx={{ color: green[400] }}>
                                         <AddCircleOutlineIcon />
                                     </IconButton>
                                 </InputAdornment>

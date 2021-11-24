@@ -15,7 +15,7 @@ export default function Header() {
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static" sx={{ bgcolor: blue[200] }}>
-                <Toolbar>
+                <Toolbar component="form">
 
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         React Trello-like App
@@ -30,7 +30,7 @@ export default function Header() {
                         onChange={e => { setlistName(e.target.value) }}
                         endAdornment={
                             <InputAdornment position="end">
-                                <IconButton disabled={!listName} onClick={addList} size="small" sx={{ color: green[400] }}>
+                                <IconButton  type="submit" disabled={!listName} onClick={addList} size="small" sx={{ color: green[400] }}>
                                     <AddCircleOutlineIcon />
                                 </IconButton>
                             </InputAdornment>
