@@ -11,10 +11,14 @@ class  ItemController {
     async update (req, res) {
 
         try{
-            const {id, name, sortOrder, listId} = req.body
+            const {id, name, sortOrder, listId, sortArray} = req.body
             await Item.update(
                 {id, itemName: name, sortOrder, listId},
                 {where:{id: id}})
+            await sortArray.map(i => 
+                    Item.update(
+                        {id: i.id, itemName: i.name, sortOrder: i.sortOrder, listId},
+                        {where:{id: i.id}}))
             res.status(200).json({message:"Updated successfully"});
            }
            catch(e){
