@@ -8,21 +8,24 @@ import { ListActionCreators } from '../store/redusers/List/actionCreators';
 export default function Item({ item, list }) {
   const { itemName, updatedAt } = item;
   const updateTime = ' ' + updatedAt;
+  // const isDragOver = true;
   const dispatch = useDispatch()
   function dragStartHandler(e, list, item) {
     dispatch(ListActionCreators.dragStartItem(item, list))
   }
   function dragEndHandler(e) {
-    e.target.style.boxShadow = 'none'
+    // e.target.style.boxShadow = 'none'
+    e.target.style.background = 'none'
   }
   function dragLeaveHandler(e) {
-    e.target.style.boxShadow = 'none'
+    // e.target.style.boxShadow = 'none'
+    e.target.style.background = 'lightgray'
   }
-  function dragOverHandler(e) {
+  function dragOverHandler(e, isDragOver = false) {
     e.preventDefault()
-    // if(e.target.className == 'item') {
-    e.target.style.boxShadow = '0 4px 3px gray'
-    // e.target.style.background = 'lightgray'
+    // if(isDragOver) {
+    // e.target.style.boxShadow = '0 4px 3px gray'
+    e.target.style.background = 'lightgray'
     // }
   }
   function dropHandler(e, list, item) {
@@ -35,7 +38,7 @@ export default function Item({ item, list }) {
     dispatch(ListActionCreators.deleteItem(id, list))
   }
   return (
-    <Card sx={{ minWidth: 230, bgcolor: indigo[100], borderRadius: 2 }}
+    <Card  sx={{ minWidth: 230, bgcolor: indigo[100], borderRadius: 2 }}
       classes={{
         root: "item", // class name, e.g. classes-nesting-root-x
         // label: classes.label, // class name, e.g. classes-nesting-label-x

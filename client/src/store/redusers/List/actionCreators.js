@@ -16,7 +16,10 @@ export const ListActionCreators = {
     fetchList: () => async dispatch => {
         try {
             const { data } = await axios.get(baseURL + '/list')
-            dispatch({ type: FETCH_LISTS, payload: data })
+            const sortedList = data.sort(
+                (a,b) => a.sortOrder <= b.sortOrder
+            )
+            dispatch({ type: FETCH_LISTS, payload: sortedList })
         } catch (e) {
             console.error('Fetch list error.......', e)
         }
@@ -79,7 +82,7 @@ export const ListActionCreators = {
             console.log("sortArray = ", sortArray)
             const newLists1 = newLists.map(l => (l.id === toList.id) ? newList1 : l)
 
-            await axios.put(baseURL + '/item', { ...droppingItem, sortOrder: index, listId: toList.id }) 
+            await axios.put(baseURL + '/item', { ...droppingItem, sortOrder: index, listId: toList.id, sortArray: sortArray }) 
             dispatch({ type: UPDATE_LISTS, payload: newLists1 })
 
         } catch (e) {
