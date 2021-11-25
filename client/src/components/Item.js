@@ -1,16 +1,12 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Grid, IconButton, Card, Typography, CardContent } from '@mui/material';
-import { makeStyles } from '@mui/styles';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { indigo } from '@mui/material/colors';
 import { useDispatch } from 'react-redux';
 import { ListActionCreators } from '../store/redusers/List/actionCreators';
 
-const useStyles =makeStyles(theme => ({
-  dragOverItem:   {} 
-}))
-
 export default function Item({ item, list }) {
+  const itemEl = useRef(null);
   const { itemName, updatedAt } = item;
   const updateTime = ' ' + updatedAt;
   const dispatch = useDispatch()
@@ -18,16 +14,13 @@ export default function Item({ item, list }) {
     dispatch(ListActionCreators.dragStartItem(item, list))
   }
   function dragEndHandler(e) {
-    e.target.style.boxShadow = 'none'
+    itemEl.current.style.boxShadow = 'none'
   }
   function dragLeaveHandler(e) {
-    e.target.style.boxShadow = 'none'
+    itemEl.current.style.boxShadow = 'none'
   }
   function dragOverHandler(e) {
-    e.preventDefault()
-    if (e.target.className === 'dragOverItem') {
-      e.target.style.boxShadow = '0 4px 3px gray'
-  }
+      itemEl.current.style.boxShadow = '0 4px 3px gray'
   }
   function dropHandler(e, list, item) {
     e.preventDefault()
@@ -38,10 +31,9 @@ export default function Item({ item, list }) {
     const id = item.id
     dispatch(ListActionCreators.deleteItem(id, list))
   }
-  const classes = useStyles();
   return (
-    <Card sx={{ minWidth: 230, bgcolor: indigo[100], borderRadius: 2 }}
-      className={classes.dragOverItem}
+    <Card sx={{ minWidth: 230, bgcolor: indigo[100], borderRadius: 2 }} 
+      ref={itemEl} 
       onDragStart={e => dragStartHandler(e, list, item)}
       onDragLeave={e => dragLeaveHandler(e)}
       onDragEnd={e => dragEndHandler(e)}

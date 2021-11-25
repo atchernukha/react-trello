@@ -78,8 +78,6 @@ export const ListActionCreators = {
             const sortArray = newItems1?.map((x,index) => ({...x,sortOrder: index}))
             const newList1 = { ...toList, items: sortArray }
 
-            console.log("Items = ", newList1.items)
-            console.log("sortArray = ", sortArray)
             const newLists1 = newLists.map(l => (l.id === toList.id) ? newList1 : l)
 
             await axios.put(baseURL + '/item', { ...droppingItem, sortOrder: index, listId: toList.id, sortArray: sortArray }) 
