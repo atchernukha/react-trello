@@ -1,48 +1,47 @@
 import React from 'react';
 import { Grid, IconButton, Card, Typography, CardContent } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { indigo } from '@mui/material/colors';
 import { useDispatch } from 'react-redux';
 import { ListActionCreators } from '../store/redusers/List/actionCreators';
 
+const useStyles =makeStyles(theme => ({
+  dragOverItem:   {} 
+}))
+
 export default function Item({ item, list }) {
   const { itemName, updatedAt } = item;
   const updateTime = ' ' + updatedAt;
-  // const isDragOver = true;
   const dispatch = useDispatch()
   function dragStartHandler(e, list, item) {
     dispatch(ListActionCreators.dragStartItem(item, list))
   }
   function dragEndHandler(e) {
-    // e.target.style.boxShadow = 'none'
-    e.target.style.background = 'none'
+    e.target.style.boxShadow = 'none'
   }
   function dragLeaveHandler(e) {
-    // e.target.style.boxShadow = 'none'
-    e.target.style.background = 'lightgray'
+    e.target.style.boxShadow = 'none'
   }
-  function dragOverHandler(e, isDragOver = false) {
+  function dragOverHandler(e) {
     e.preventDefault()
-    // if(isDragOver) {
-    // e.target.style.boxShadow = '0 4px 3px gray'
-    e.target.style.background = 'lightgray'
-    // }
+    if (e.target.className === 'dragOverItem') {
+      e.target.style.boxShadow = '0 4px 3px gray'
+  }
   }
   function dropHandler(e, list, item) {
     e.preventDefault()
     e.stopPropagation()
-    dispatch(ListActionCreators.moveItem(list,item))
+    dispatch(ListActionCreators.moveItem(list, item))
   }
   const removeItem = () => {
     const id = item.id
     dispatch(ListActionCreators.deleteItem(id, list))
   }
+  const classes = useStyles();
   return (
-    <Card  sx={{ minWidth: 230, bgcolor: indigo[100], borderRadius: 2 }}
-      classes={{
-        root: "item", // class name, e.g. classes-nesting-root-x
-        // label: classes.label, // class name, e.g. classes-nesting-label-x
-      }}
+    <Card sx={{ minWidth: 230, bgcolor: indigo[100], borderRadius: 2 }}
+      className={classes.dragOverItem}
       onDragStart={e => dragStartHandler(e, list, item)}
       onDragLeave={e => dragLeaveHandler(e)}
       onDragEnd={e => dragEndHandler(e)}
@@ -57,10 +56,10 @@ export default function Item({ item, list }) {
             justifyContent="space-between"
             alignItems="center"
           >
-        {itemName}
-          <IconButton color="secondary" onClick={ removeItem }>
-          <HighlightOffIcon />
-          </IconButton>
+            {itemName}
+            <IconButton color="secondary" onClick={removeItem}>
+              <HighlightOffIcon />
+            </IconButton>
           </Grid>
         </Typography>
         <Typography variant="body2" color="text.secondary">

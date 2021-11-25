@@ -17,7 +17,7 @@ export const ListActionCreators = {
         try {
             const { data } = await axios.get(baseURL + '/list')
             const sortedList = data.sort(
-                (a,b) => a.sortOrder <= b.sortOrder
+                (a,b) => a.sortOrder < b.sortOrder
             )
             dispatch({ type: FETCH_LISTS, payload: sortedList })
         } catch (e) {

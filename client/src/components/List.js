@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { FormControl, Input, InputLabel, Card, Typography, CardContent, Grid, IconButton, InputAdornment } from '@mui/material';
+import { FormControl, Input, InputLabel, Card, Typography, CardContent, Grid, IconButton, InputAdornment, fabClasses } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { useDispatch } from 'react-redux';
 import { ListActionCreators } from '../store/redusers/List/actionCreators';
 import Item from './Item';
 import { green, lightBlue } from '@mui/material/colors';
+
+
 
 export default function List({ list }) {
     const [itemName, setItemName] = useState("")
@@ -16,12 +19,11 @@ export default function List({ list }) {
     }, []);
     const dragOverHandler = e => {
         e.preventDefault()
-        e.target.style.boxShadow = '0 4px 3px gray'
+        if (e.target.className === 'dragOverItem') {
+            e.target.style.boxShadow = '0 5px 4px gray'
+        }
     }
-    function dragLeaveHandler(e) {
-        e.target.style.boxShadow = 'none'
-    }
-    const dropHandler = (e, list) => {
+    const dropItemHandler = (e, list) => {
         e.preventDefault()
         e.stopPropagation()
         dispatch(ListActionCreators.moveItem(list))
@@ -37,8 +39,7 @@ export default function List({ list }) {
     return (
         <Card sx={{ maxWidth: 275, bgcolor: lightBlue[100], mx: "20px", borderRadius: 2 }}
             onDragOver={e => dragOverHandler(e)}
-            onDragLeave={e => dragLeaveHandler(e)}
-            onDrop={e => dropHandler(e, list)}
+            onDrop={e => dropItemHandler(e, list)}
         >
             <CardContent spacing={3}>
                 <Typography gutterBottom variant="h5" component="div">
@@ -61,7 +62,7 @@ export default function List({ list }) {
                 <Grid container component="form" justifyContent="center" spacing={1}>
                     {items ? items.map(x =>
                         <Grid key={x.id} item>
-                            <Item item={x} list={list} />
+                            <Item item={x} list={list} dragOverEl />
                         </Grid>
                     ) : null}
                     <FormControl fullWidth sx={{ mx: "20px", }} variant="standard" >
