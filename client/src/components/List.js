@@ -18,13 +18,13 @@ export default function List({ list }) {
     }, []);
     const dragOverHandler = e => {
         e.preventDefault()
-        if (e.target.className === 'dragOverItem') {
-            e.target.style.boxShadow = '0 5px 4px gray'
-        }
+        // if (e.target.className === 'dragOverItem') {
+        //     e.target.style.boxShadow = '0 5px 4px gray'
+        // }
     }
     const dropItemHandler = (e, list) => {
         e.preventDefault()
-        e.stopPropagation()
+        // e.stopPropagation()
         dispatch(ListActionCreators.moveItem(list))
     }
     const deleteHandler = () => {
@@ -64,7 +64,7 @@ export default function List({ list }) {
                             <Item item={x} list={list} dragOverEl />
                         </Grid>
                     ) : null}
-                    <FormControl fullWidth sx={{ mx: "20px", }} variant="standard" >
+                    <FormControl fullWidth sx={{ mx: "20px", mt: "4px" }} variant="standard" >
                         <InputLabel htmlFor="new-item">Type new item...</InputLabel>
                         <Input
                             id="new-item"
