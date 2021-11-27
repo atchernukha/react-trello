@@ -10,4 +10,7 @@ app.use(cors())
 app.use(express.static(__dirname))
 app.use(express.static(path.resolve(__dirname, 'build')))
 
+
+app.get('/', (req, res) => res.send('Hello World!'));
+
 app.listen(PORT)
