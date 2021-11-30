@@ -1,22 +1,26 @@
 const { List } =require('../models/models')
-// const ApiError = require('../error/ApiError')
 
 class  ListController {
     async create (req, res) {
         const {name} = req.body
-        const list = await List.create({listName: name})
-        return res.status(200).json(list);
+        try {
+            const list = await List.create({listName: name})
+            return res.status(200).json(list);
+        }
+        catch {
+            res.status(404).json({message:"list not created"})
+        }
+ 
     }
 
     async getAll (req, res) {
-        const lists = await List.findAll()
-        return res.json(lists)
-    }
-
-    async getOne (req, res) {
-        const {id} = req.params
-        const list = await List.findAll({where:{id: id}})
-        return res.json(list)
+        try {
+            const lists = await List.findAll()
+            return res.json(lists)
+        }
+        catch {
+            res.status(404).json({message:"Lists fetching error"})
+        }
     }
 
     async delete (req, res) {

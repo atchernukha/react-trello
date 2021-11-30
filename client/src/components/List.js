@@ -24,7 +24,6 @@ export default function List({ list }) {
     }
     const dropItemHandler = (e, list) => {
         e.preventDefault()
-        // e.stopPropagation()
         dispatch(ListActionCreators.moveItem(list))
     }
     const deleteHandler = () => {
