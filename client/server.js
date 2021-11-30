@@ -6,7 +6,6 @@ const PORT = process.env.PORT || 8080
 
 const app = express()
 
-console.log("Fronend:")
 app.use(cors())
 
 app.use(express.static(path.resolve(__dirname, 'build')))
