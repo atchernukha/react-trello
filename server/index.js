@@ -2,7 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const sequelize = require('./db')
 const models = require('./models/models')
-const path = require('path') // not need for heroku deploy
+const path = require('path') // need only for heroku deploy
 const cors = require('cors') // not need for heroku deploy
 const router =require('./routes/index')
 
