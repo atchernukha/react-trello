@@ -55,39 +55,40 @@ If you have all of these tools installed on your computer, just follow the steps
 >REACT_APP_API_HOST = 'http://localhost:5000/'
 
 * Install the dependencies
->$ npm install
+>`$ npm install`
 * Start the app
->$ npm start
+>`$ npm start`
+
+
 
 After following these steps, the terminal will show you in which port it's running, it's on the port 3000 usually, so, you'll just need to enter in your browser and type localhost:3000, then you'll see the app running. When you want to stop it, go to the terminal that you used to start the app, and type CTRL+C, this way you'll stop the app
 
-## Technical requirements:
+> [!IMPORTANT]
+> ## Technical requirements:
+>* SPA approach for frontend
+>* React/Vue.js should be used
+>* State management on frontend (like redux, vuex)
+>* Node.js for backend
+>* Database (MongoDB / PostgreSQL / MySQL)
 
-* SPA approach for frontend
-* React/Vue.js should be used
-* State management on frontend (like redux, vuex)
-* Node.js for backend
-* Database (MongoDB / PostgreSQL / MySQL)
+> [!IMPORTANT]
+> ## Functional requirements:
+>* The web application should have a trello-like dashboard.
+>* Users should have an ability to create as many lists as they want.
+>* Users should be able to create cards inside lists. Cards should have a title and timestamp of last edited time. It should be shown somewhere on the card and formatted like “30 minutes ago” or “2 days ago”.
+>* Users should be able to move cards from one list to another with drag and drop
+>* Users can delete cards and empty lists
 
-## Functional requirements:
+> [!TIP]
+> ## Would be a plus (not necessary)
+>* Have a hosted frontend/backend/side 
+>* Adaptive design  
+>* Save on change 
 
-* The web application should have a trello-like dashboard.
-* Users should have an ability to create as many lists as they want.
-* Users should be able to create cards inside lists. Cards should have a title and timestamp of last edited time. It should be shown somewhere on the card and formatted like “30 minutes ago” or “2 days ago”.
-* Users should be able to move cards from one list to another with drag and drop
-* Users can delete cards and empty lists
-
-## Would be a plus (not necessary)
-
-* Have a hosted frontend/backend/side 
-* Adaptive design  
-* Save on change 
-
-
-## Additional info:
-
-* UI libraries can be used (material ui, vuetify, etc.)
-* No animation required
-* No perfect ui required
-* Code should follow best practices (structure, patterns, etc)
+> [!NOTE] 
+> ## Additional info:
+>* UI libraries can be used (material ui, vuetify, etc.)
+>* No animation required
+>* No perfect ui required
+>* Code should follow best practices (structure, patterns, etc)
 

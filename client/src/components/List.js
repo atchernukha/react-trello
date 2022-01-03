@@ -30,7 +30,7 @@ export default function List({ list }) {
         dispatch(ListActionCreators.deleteList(list))
     }
     const addItem = e => {
-        console.log("add Item:", itemName)
+        // console.log("add Item:", itemName)
         dispatch(ListActionCreators.createItem(itemName, list))
         setItemName("")
     }
